@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        padding-top: 20px;
+    }
+    body, header {
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 100%;
+        max-width: 1920px;
+        height: 560px;
+        margin: 0 auto;
+    }
+
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 560px;
+        overflow: hidden;
+    }
+
+    .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    #about {
+        padding: 20px;
+        background: #ffffff;
+        margin: 20px auto;
+        max-width: 80%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center; 
+    }
+
+    #about h2 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        color: #333333;
+    }
+
+    #about p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        color: #555555;
+        margin-bottom: 20px; 
+    }
+
+    #about a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    #about a:hover {
+        background-color: #45a049;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .button-container button {
+        background-color: #4CAF50; 
+        border: none; 
+        color: white; 
+        padding: 15px 32px; 
+        text-align: center; 
+        text-decoration: none; 
+        font-size: 16px; 
+        cursor: pointer; 
+        border-radius: 12px; 
+        transition: background-color 0.3s; 
+    }
+    
+    .button-container button:hover {
+        background-color: #45a049; 
+    }
+
+    .historical-data {
+        white-space: pre-wrap; 
+        margin: 20px auto;
+        max-width: 80%;
+        padding: 20px;
+        background: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    @media (max-width: 1920px) {
+        .swiper-container {
+            max-width: 100%;
+            height: 560px;
+        }
+        .swiper-slide {
+            height: 560px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .swiper-container {
+            height: 400px; 
+        }
+        .swiper-slide {
+            height: 400px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .swiper-container {
+            height: 300px; 
+        }
+        .swiper-slide {
+            height: 300px;
+        }
+    }
+</style>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link "  href="realtime.html">Realtime Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="historical.html">Historical Data</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="plants.html">Plant Information</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="images/historicaldatabkg.png" alt="Slide 1">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="about">
+            <p>
+                Access past collected data to analyze and optimize growth conditions. 
+                You can see how environmental parameters have varied and how they have affected plant health.
+            </p>
+        </section>
+        <div class="button-container">
+            <button id="btn_soil_hum">Soil Humidity</button>
+            <button id="btn_air_qual">Air Quality</button>
+            <button id="btn_air_hum">Air Humidity</button>
+            <button id="btn_air_temp">Air Temperature</button>
+            <button id="btn_light_int">Light Intensity</button>
+            <button id="btn_uv_int">UV Intensity</button>
+        </div>
+        
+        <div id="soilHumidity" class="historical-data" style="display: none;"></div>
+        <div id="airQuality" class="historical-data" style="display: none;"></div>
+        <div id="airHumidity" class="historical-data" style="display: none;"></div>
+        <div id="airTemperature" class="historical-data" style="display: none;"></div>            
+        <div id="lightIntensity" class="historical-data" style="display: none;"></div>
+        <div id="UVIntensity" class="historical-data" style="display: none;"></div>
+        
+        <br><br><br><br><br><br><br>
+        <script type="module">
+            
+            import { initializeApp } from "";
+            import { getDatabase, ref, onValue } from "";
+            
+           
+            const firebaseConfig = {
+                apiKey: "",
+                authDomain: "",
+                databaseURL: "",
+                projectId: "",
+                storageBucket: "",
+                messagingSenderId: "",
+                appId: ""
+            };
+            
+            
+            const app = initializeApp(firebaseConfig);
+            const database = getDatabase(app);
+            
+            console.log("Firebase initialized:", app);
+            console.log("Database URL:", firebaseConfig.databaseURL);
+            
+            
+            function fetchData(refPath, elementId) {
+                const element = document.getElementById(elementId);
+                const dataRef = ref(database, refPath);
+                let dataFetched = false;
+            
+                return function () {
+                    
+                    const allElements = document.querySelectorAll('.historical-data');
+                    allElements.forEach(el => el.style.display = 'none');
+                    
+                    if (!dataFetched) {
+                        onValue(dataRef, (snapshot) => {
+                            console.log("Snapshot received:", snapshot);
+                            const data = snapshot.val();
+                            console.log("Received data:", data);
+                        
+                            if (data) {
+                                
+                                element.innerHTML = '';
+            
+                                
+                                let formattedData = '';
+                                Object.entries(data).forEach(([timestamp, value]) => {
+                                    const datePart = timestamp.split('_')[0];
+                                    const timePart = timestamp.split('_')[1];
+                                    const year = datePart.substring(0, 4);
+                                    const month = datePart.substring(4, 6);
+                                    const day = datePart.substring(6, 8);
+                                    const hours = timePart.substring(0, 2);
+                                    const minutes = timePart.substring(2, 4);
+                                    const seconds = timePart.substring(4, 6);
+                                    const formattedDate = `${year}-${month}-${day}`;
+                                    const formattedTime = `${hours}:${minutes}:${seconds}`;
+                                    
+                                    formattedData += `Date: ${formattedDate}, Time: ${formattedTime}, Value: ${value}\n`;
+                                });
+                                
+                                element.textContent = formattedData;
+                                dataFetched = true;
+                            } else {
+                                console.log("No data available in snapshot");
+                                element.innerHTML = '<p>No data available</p>';
+                            }
+                        });
+                    }
+            
+                    element.style.display = 'block';
+                };
+            }
+            
+            
+            document.getElementById('btn_soil_hum').addEventListener('click', fetchData('soilHumidity', 'soilHumidity'));
+            document.getElementById('btn_air_qual').addEventListener('click', fetchData('airQuality', 'airQuality'));
+            document.getElementById('btn_air_hum').addEventListener('click', fetchData('airHumidity', 'airHumidity'));
+            document.getElementById('btn_air_temp').addEventListener('click', fetchData('airTemperature', 'airTemperature'));
+            document.getElementById('btn_light_int').addEventListener('click', fetchData('lightIntensity', 'lightIntensity'));
+            document.getElementById('btn_uv_int').addEventListener('click', fetchData('UVIntensity', 'UVIntensity'));
+            
+        </script>
+    </main>
+</body>
+</html>

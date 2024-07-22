@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-time Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding-top: 20px;
+        }
+        body, header {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #realtime-data {
+            padding: 20px;
+        }
+
+        .card {
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            text-align: center;
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-title {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .card-text {
+            font-size: 1em;
+            color: #555;
+        } 
+        .swiper-container {
+            width: 100%;
+            max-width: 1920px;
+            height: 560px;
+            margin: 0 auto;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 560px;
+            overflow: hidden;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        #about {
+            padding: 20px;
+            background: #ffffff;
+            margin: 20px auto;
+            max-width: 80%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        #about h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: #333333;
+        }
+
+        #about p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555555;
+            margin-bottom: 20px; 
+        }
+
+        #about a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        #about a:hover {
+            background-color: #45a049;
+        }
+       
+        @media (max-width: 1920px) {
+            .swiper-container {
+                max-width: 100%;
+                height: 560px;
+            }
+            .swiper-slide {
+                height: 560px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .swiper-container {
+                height: 400px; 
+            }
+            .swiper-slide {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .swiper-container {
+                height: 300px; 
+            }
+            .swiper-slide {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+                <div class="container-fluid">
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="realtime.html">Realtime Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="historical.html">Historical Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="plants.html">Plant Information</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="images/realtimedatabkg.png" alt="Slide 1">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+        </div>
+    </header>
+
+    
+    <main>
+        <section id="realtime-data">
+            <div class="container">
+                <section id="about"> 
+                <p class="text-center mb-4">Monitor the conditions in your greenhouse in real-time. Data 
+                    is collected from five sensors connected to an Arduino Uno R4 board and sent to the Firebase Realtime Database.
+                    The sensors monitor the following: </p> </section>
+                <div class="row">
+                    <!-- Card pentru Soil Humidity -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="images/soil_humidity.jpg" class="card-img-top" alt="Soil Humidity">
+                            <div class="card-body">
+                                <h5 class="card-title">Soil Humidity</h5>
+                                <p id="soilHumidity" class="card-text">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card pentru Air Quality -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="images/air_quality.jpg" class="card-img-top" alt="Air Quality">
+                            <div class="card-body">
+                                <h5 class="card-title">Air Quality</h5>
+                                <p id="airQuality" class="card-text">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card pentru Air Humidity -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="images/air_humidity.jpg" class="card-img-top" alt="Air Humidity">
+                            <div class="card-body">
+                                <h5 class="card-title">Air Humidity</h5>
+                                <p id="airHumidity" class="card-text">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card pentru Air Temperature -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="images/air_temperature.jpg" class="card-img-top" alt="Air Temperature">
+                            <div class="card-body">
+                                <h5 class="card-title">Air Temperature</h5>
+                                <p id="airTemperature" class="card-text">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card pentru Light Intensity -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="images/light_intensity.jpg" class="card-img-top" alt="Light Intensity">
+                            <div class="card-body">
+                                <h5 class="card-title">Light Intensity</h5>
+                                <p id="lightIntensity" class="card-text">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card pentru UV Intensity -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="images/uv_intensity.jpg" class="card-img-top" alt="UV Intensity">
+                            <div class="card-body">
+                                <h5 class="card-title">UV Intensity</h5>
+                                <p id="UVIntensity" class="card-text">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+</body>
+    <script type="module">
+        
+        import { initializeApp } from "";
+        import { getDatabase, ref, onValue } from "";
+
+        
+        const firebaseConfig = {
+            apiKey: "",
+            authDomain: "",
+            databaseURL: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
+        };
+
+        
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        console.log("Firebase initialized:", app);
+        console.log("Database URL:", firebaseConfig.databaseURL);
+
+        
+        const soilHumidityRef = ref(database, 'soilHumidity');
+
+        console.log("Reference to soilHumidity:", soilHumidityRef);
+
+        
+        onValue(soilHumidityRef, (snapshot) => {
+            console.log("Snapshot received:", snapshot);
+            const data = snapshot.val();
+            console.log("Received data:", data);
+
+            if (data) {
+                const timestamps = Object.keys(data);
+                console.log("Timestamps:", timestamps);
+                const latestTimestamp = timestamps[timestamps.length - 1];
+                const latestValue = data[latestTimestamp];
+                console.log("Latest timestamp:", latestTimestamp);
+                console.log("Latest value:", latestValue);
+
+                const soilHumidityElement = document.getElementById('soilHumidity');
+                if (soilHumidityElement) {
+                    soilHumidityElement.innerText = `Soil Humidity: ${latestValue} %`;
+                } else {
+                    console.log("Element with id 'soilHumidity' not found");
+                }
+            } else {
+                console.log("No data available in snapshot");
+                const soilHumidityElement = document.getElementById('soilHumidity');
+                if (soilHumidityElement) {
+                    soilHumidityElement.innerText = 'No data available';
+                }
+            }
+        });
+        const airQualityRef = ref(database, 'airQuality');
+
+        console.log("Reference to airQuality:", airQualityRef);
+
+      
+        onValue(airQualityRef, (snapshot) => {
+            console.log("Snapshot received:", snapshot);
+            const data = snapshot.val();
+            console.log("Received data:", data);
+
+            if (data) {
+                const timestamps = Object.keys(data);
+                console.log("Timestamps:", timestamps);
+                const latestTimestamp = timestamps[timestamps.length - 1];
+                const latestValue = data[latestTimestamp];
+                console.log("Latest timestamp:", latestTimestamp);
+                console.log("Latest value:", latestValue);
+
+                const airQualityElement = document.getElementById('airQuality');
+                if (airQualityElement) {
+                    airQualityElement.innerText = `Air Quality: ${latestValue}`;
+                } else {
+                    console.log("Element with id 'airQuality' not found");
+                }
+            } else {
+                console.log("No data available in snapshot");
+                const airQualityElement = document.getElementById('airQuality');
+                if (airQualityElement) {
+                    airQualityElement.innerText = 'No data available';
+                }
+            }
+        });
+        const airHumidityRef = ref(database, 'airHumidity');
+
+        console.log("Reference to airHumidity:", airHumidityRef);
+
+        
+        onValue(airHumidityRef, (snapshot) => {
+            console.log("Snapshot received:", snapshot);
+            const data = snapshot.val();
+            console.log("Received data:", data);
+
+            if (data) {
+                const timestamps = Object.keys(data);
+                console.log("Timestamps:", timestamps);
+                const latestTimestamp = timestamps[timestamps.length - 1];
+                const latestValue = data[latestTimestamp];
+                console.log("Latest timestamp:", latestTimestamp);
+                console.log("Latest value:", latestValue);
+
+                const airHumidityElement = document.getElementById('airHumidity');
+                if (airHumidityElement) {
+                    airHumidityElement.innerText = `Air Humidity: ${latestValue} %`;
+                } else {
+                    console.log("Element with id 'airHumidity' not found");
+                }
+            } else {
+                console.log("No data available in snapshot");
+                const airHumidityElement = document.getElementById('airHumidity');
+                if (airHumidityElement) {
+                    airHumidityElement.innerText = 'No data available';
+                }
+            }
+        });
+        const airTemperatureRef = ref(database, 'airTemperature');
+
+            console.log("Reference to airTemperature:", airTemperatureRef);
+
+            onValue(airTemperatureRef, (snapshot) => {
+                console.log("Snapshot received:", snapshot);
+                const data = snapshot.val();
+                console.log("Received data:", data);
+
+                if (data) {
+                    const timestamps = Object.keys(data);
+                    console.log("Timestamps:", timestamps);
+                    const latestTimestamp = timestamps[timestamps.length - 1];
+                    const latestValue = data[latestTimestamp];
+                    console.log("Latest timestamp:", latestTimestamp);
+                    console.log("Latest value:", latestValue);
+
+                    const airTemperatureElement = document.getElementById('airTemperature');
+                    if (airTemperatureElement) {
+                        airTemperatureElement.innerText = `Air Temperature: ${latestValue} °C`;
+                    } else {
+                        console.log("Element with id 'airTemperature' not found");
+                    }
+                } else {
+                    console.log("No data available in snapshot");
+                    const airTemperatureElement = document.getElementById('airTemperature');
+                    if (airTemperatureElement) {
+                        airTemperatureElement.innerText = 'No data available';
+                    }
+                }
+            });
+            const lightIntensityRef = ref(database, 'lightIntensity');
+
+            console.log("Reference to lightIntensity:", lightIntensityRef);
+
+            onValue(lightIntensityRef, (snapshot) => {
+                console.log("Snapshot received:", snapshot);
+                const data = snapshot.val();
+                console.log("Received data:", data);
+
+                if (data) {
+                    const timestamps = Object.keys(data);
+                    console.log("Timestamps:", timestamps);
+                    const latestTimestamp = timestamps[timestamps.length - 1];
+                    const latestValue = data[latestTimestamp];
+                    console.log("Latest timestamp:", latestTimestamp);
+                    console.log("Latest value:", latestValue);
+
+                    const lightIntensityElement = document.getElementById('lightIntensity');
+                    if (lightIntensityElement) {
+                        lightIntensityElement.innerText = `Light Intensity: ${latestValue} lx`;
+                    } else {
+                        console.log("Element with id 'lightIntensity' not found");
+                    }
+                } else {
+                    console.log("No data available in snapshot");
+                    const lightIntensityElement = document.getElementById('lightIntensity');
+                    if (lightIntensityElement) {
+                        lightIntensityElement.innerText = 'No data available';
+                    }
+                }
+            });
+            const UVIntensityRef = ref(database, 'UVIntensity');
+
+            console.log("Reference to UVIntensity:", UVIntensityRef);
+
+            onValue(UVIntensityRef, (snapshot) => {
+                console.log("Snapshot received:", snapshot);
+                const data = snapshot.val();
+                console.log("Received data:", data);
+
+                if (data) {
+                    const timestamps = Object.keys(data);
+                    console.log("Timestamps:", timestamps);
+                    const latestTimestamp = timestamps[timestamps.length - 1];
+                    const latestValue = data[latestTimestamp];
+                    console.log("Latest timestamp:", latestTimestamp);
+                    console.log("Latest value:", latestValue);
+
+                    const UVIntensityElement = document.getElementById('UVIntensity');
+                    if (UVIntensityElement) {
+                        UVIntensityElement.innerText = `UV Intensity: ${latestValue}`;
+                    } else {
+                        console.log("Element with id 'UVIntensity' not found");
+                    }
+                } else {
+                    console.log("No data available in snapshot");
+                    const UVIntensityElement = document.getElementById('UVIntensity');
+                    if (UVIntensityElement) {
+                        UVIntensityElement.innerText = 'No data available';
+                    }
+                }
+            });
+    </script>
+</body>
+</html>

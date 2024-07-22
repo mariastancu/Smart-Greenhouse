@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Information</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    padding-top: 20px;
+}
+body, header {
+    margin: 0;
+    padding: 0;
+}
+.swiper-container {
+    width: 100%;
+    max-width: 1920px;
+    height: 560px;
+    margin: 0 auto;
+}
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 560px;
+    overflow: hidden;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#about {
+    padding: 20px;
+    background: #ffffff;
+    margin: 20px auto;
+    max-width: 80%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center; 
+}
+
+#about h2 {
+    font-size: 2.5em;
+    margin-bottom: 15px;
+    color: #333333;
+}
+
+#about p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #555555;
+    margin-bottom: 20px; 
+}
+
+#about a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#about a:hover {
+    background-color: #45a049;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.button-container button, .plant-button {
+    background-color: #4CAF50; 
+    border: none; 
+    color: white; 
+    padding: 15px 32px; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 12px; 
+    transition: background-color 0.3s; 
+}
+
+.button-container button:hover, .plant-button:hover {
+    background-color: #45a049; 
+}
+
+.historical-data {
+    white-space: pre-wrap; 
+    margin: 20px auto;
+    max-width: 80%;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    text-align: left;
+}
+
+.plant-description {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.plant-image {
+    width: 350px; 
+    height: 350px; 
+    object-fit: cover; 
+    border-radius: 10px;
+    margin: 0 auto; 
+    display: block;
+}
+
+.historical-data ol, .historical-data ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.historical-data li {
+    margin-bottom: 10px;
+}
+
+.historical-data li::before {
+    content: '';
+    margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+    .historical-data {
+        flex-direction: column;
+        text-align: center;
+    }
+    .plant-description {
+        margin-bottom: 20px;
+        max-width: 100%;
+    }
+    .plant-image {
+        margin-left: 0;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 1920px) {
+    .swiper-container {
+        max-width: 100%;
+        height: 560px;
+    }
+    .swiper-slide {
+        height: 560px;
+    }
+}
+
+@media (max-width: 768px) {
+    .swiper-container {
+        height: 400px; 
+    }
+    .swiper-slide {
+        height: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .swiper-container {
+        height: 300px; 
+    }
+    .swiper-slide {
+        height: 300px;
+    }
+}
+
+</style>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="realtime.html">Realtime Data</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="historical.html">Historical Data</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="plants.html">Plant Information</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="images/plantinfobkg.png" alt="Slide 1">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section id="about">
+            <p>
+                Access detailed information about various plants, their cultivation processes, and environmental requirements.
+            </p>
+        </section>
+        <div class="button-container">
+            <button id="vegetables-button">Vegetables</button>
+            <button id="herbs-button">Herbs</button>
+            <button id="flowers-button">Flowers</button>
+            <button id="grains-button">Grains</button>
+        </div>
+        
+        <div id="category-options" class="button-container" style="display: none;"></div>
+        <div id="plant-info-paragraph" class="historical-data" style="display: none;"></div>
+        
+        <br><br><br><br><br><br><br>
+        <script>
+            const vegetables = ["Tomatoes", "Peppers", "Cucumbers", "Lettuce", "Spinach"];
+            const herbs = ["Basil", "Parsley", "Thyme", "Dill", "Cilantro"];
+            const flowers = ["Petunias", "Gerbera", "Tulips", "Daisies", "Sunflowers"];
+            const grains = ["Wheat", "Barley", "Oats", "Rye", "Corn"];
+            
+           
+            function showCategoryOptions(category) {
+                
+                const categoryOptions = document.getElementById('category-options');
+                categoryOptions.innerHTML = '';
+                categoryOptions.style.display = 'flex';
+            
+                
+                let plants;
+                switch (category) {
+                    case 'vegetables':
+                        plants = vegetables;
+                        break;
+                    case 'herbs':
+                        plants = herbs;
+                        break;
+                    case 'flowers':
+                        plants = flowers;
+                        break;
+                    case 'grains':
+                        plants = grains;
+                        break;
+                    default:
+                        break;
+                }
+            
+                
+                plants.forEach(plant => {
+                    const plantButton = document.createElement('button');
+                    plantButton.textContent = plant;
+                    plantButton.classList.add('plant-button'); 
+                    categoryOptions.appendChild(plantButton);
+                    
+                    
+                    plantButton.addEventListener('click', function() {
+                        showPlantInfo(plant);
+                    });
+                });
+            }
+            
+            
+            function showPlantInfo(plantName) {
+                const plantInfoParagraph = document.getElementById('plant-info-paragraph');
+                plantInfoParagraph.style.display = 'block';
+                
+                if (plantName === "Tomatoes") {
+                    const tomatoInfo = `
+                    <img src="images/tomatoes.jpg" alt="Tomatoes" class="plant-image">
+                     <div class="plant-description">
+                    <strong>Description:</strong>
+                    <p>Tomatoes (Solanum lycopersicum) are consumed worldwide, rich in vitamins A and C, potassium, and antioxidants like lycopene.<br>
+                    <strong>Cultivation Process:</strong><br>
+                    <strong>Seed Selection and Germination:</strong> Choose disease-resistant varieties. Seeds are sown indoors about 6-8 weeks before the last frost date.<br>
+                    <strong>Transplanting:</strong> Transplant seedlings once they have two sets of true leaves and the risk of frost has passed.<br>
+                    <strong>Soil Preparation:</strong> The soil should be well-drained and fertile with a pH between 6.0 and 6.8.<br>
+                    <strong>Planting:</strong> Space plants 45-60 cm apart, with rows 90-120 cm apart. Plant deeply to encourage a robust root system.<br>
+                    <strong>Watering:</strong> Keep soil consistently moist but not waterlogged. Drip irrigation or soaker hoses are preferable.<br>
+                    <strong>Fertilizing:</strong> Use a balanced fertilizer at planting and switch to a high-potassium fertilizer when fruits start to develop.<br>
+                    <strong>Pruning and Staking:</strong> Prune suckers and use stakes or cages to support the plants.<br>
+                    <strong>Pest and Disease Management:</strong> Monitor for pests and diseases and use organic or chemical controls as necessary.<br>
+                    <strong>Harvesting:</strong> Harvest when tomatoes are fully colored and slightly soft to the touch, typically 60-85 days after transplanting.<br>
+                    <strong>Environmental Parameters:</strong><br>
+                    <strong>Soil Humidity:</strong> 60-80%<br>
+                    <strong>Air Quality:</strong> Ensure good air circulation and avoid high pollution levels.<br>
+                    <strong>Air Humidity:</strong> 60-70%<br>
+                    <strong>Air Temperature:</strong> Daytime: 21-29°C, Nighttime: 13-21°C<br>
+                    <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+                    <strong>UV Intensity:</strong> Moderate UV-B levels are beneficial, but too much can be harmful.<br>
+                    </p>
+                </div>
+                
+                    `;
+                    plantInfoParagraph.innerHTML = tomatoInfo;
+
+                } else if (plantName === "Peppers") {
+    const pepperInfo = `
+     <img src="images/peppers.jpg" alt="Peppers" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Peppers (Capsicum spp.) are ranging from sweet bell peppers to hot chili peppers, rich in vitamins A and C, potassium, folic acid, and fiber.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Choose varieties suited to your climate. Start seeds indoors 8-10 weeks before the last frost date.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors after the last frost when they are 6-8 weeks old and have at least two sets of true leaves.<br>
+        <strong>Soil Preparation:</strong> Peppers thrive in well-drained, fertile soil with a pH between 6.0 and 6.8. Incorporate organic matter to improve soil structure and fertility.<br>
+        <strong>Planting:</strong> Space plants 45-60 cm apart in rows 60-90 cm apart. Plant seedlings at the same depth they were in their pots.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Use drip irrigation or soaker hoses to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and switch to a fertilizer higher in potassium and phosphorus once fruits start to form.<br>
+        <strong>Pruning and Staking:</strong> Prune early flowers to encourage strong growth and use stakes or cages to support plants as they grow.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for common pests like aphids and diseases like bacterial spot. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest peppers when they reach the desired size and color. Bell peppers are typically harvested green, but they can also be left to mature to red, yellow, or orange.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-80%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-70%<br>
+        <strong>Air Temperature:</strong> Daytime: 21-29°C, Nighttime: 16-21°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels (280-315 nm) can be beneficial for growth and capsaicin production. Excessive UV exposure can cause sunscald on fruits.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = pepperInfo;
+}
+ else if (plantName === "Cucumbers") {
+    const cucumberInfo = `
+    <img src="images/cucumbers.jpg" alt="Cucumbers" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Cucumbers (Cucumis sativus) are a widely cultivated creeping vine plant in the Cucurbitaceae family, producing cylindrical fruits used as vegetables. They are high in water content and provide a refreshing taste, with essential nutrients such as vitamin K, vitamin C, magnesium, and potassium.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Choose disease-resistant varieties. Start seeds indoors 3-4 weeks before the last frost date or sow directly into the garden after the last frost.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors when they have at least two sets of true leaves and the risk of frost has passed.<br>
+        <strong>Soil Preparation:</strong> Cucumbers prefer well-drained, fertile soil with a pH between 6.0 and 6.8. Adding compost or aged manure improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 30-45 cm apart in rows 90-150 cm apart. Use trellises to support vine growth and save space.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist, providing 1-2 inches of water per week. Avoid overhead watering to prevent fungal diseases.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a high-potassium fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like cucumber beetles and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest cucumbers when they reach the desired size, usually 50-70 days after planting. Pick regularly to encourage continuous production.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 70-90%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 60-70%<br>
+        <strong>Air Temperature:</strong> Daytime: 21-29°C, Nighttime: 16-21°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels (280-315 nm) can be beneficial, but excessive UV exposure can cause sunscald on fruits.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = cucumberInfo;
+}
+ else if (plantName === "Lettuce") {
+    const lettuceInfo = `
+    <img src="images/lettuce.jpg" alt="Lettuce" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Lettuce (Lactuca sativa) is a leafy green vegetable commonly used in salads and sandwiches. It is rich in vitamins A, C, and K, as well as folate and iron.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Choose varieties suited to your climate. Start seeds indoors 4-6 weeks before the last frost date or sow directly into the garden.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors when they have 3-4 true leaves and the risk of frost has passed.<br>
+        <strong>Soil Preparation:</strong> Lettuce prefers well-drained, fertile soil with a pH between 6.0 and 7.0. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 15-30 cm apart in rows 30-45 cm apart. Plant seeds or seedlings shallowly, as lettuce has a shallow root system.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist, providing 1-1.5 inches of water per week. Avoid overhead watering to prevent disease.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a high-nitrogen fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like downy mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest lettuce when leaves are tender and before they become bitter. Cut leaves as needed or harvest the entire head at once.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-80%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-70%<br>
+        <strong>Air Temperature:</strong> Daytime: 16-21°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 4-6 hours of direct sunlight per day, 300-600 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = lettuceInfo;
+}
+ else if (plantName === "Spinach") {
+    const spinachInfo = `
+
+     <img src="images/spinach.jpg" alt="Spinach" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Spinach (Spinacia oleracea) is a leafy green vegetable high in vitamins A, C, and K, as well as folate, iron, and calcium. It is commonly used in salads, soups, and cooked dishes.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Choose varieties suited to your climate. Sow seeds directly into the garden 4-6 weeks before the last frost date or in early fall for a fall crop.<br>
+        <strong>Transplanting:</strong> Spinach is usually direct-seeded, but seedlings can be transplanted when they have 2-3 true leaves.<br>
+        <strong>Soil Preparation:</strong> Spinach prefers well-drained, fertile soil with a pH between 6.0 and 7.5. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space seeds or seedlings 5-10 cm apart in rows 30-45 cm apart. Plant seeds shallowly, as spinach has a shallow root system.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist, providing 1-1.5 inches of water per week. Avoid overhead watering to prevent disease.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a high-nitrogen fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like downy mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest spinach when leaves are tender and before they become bitter. Cut leaves as needed or harvest the entire plant at once.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-80%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-70%<br>
+        <strong>Air Temperature:</strong> Daytime: 16-21°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 4-6 hours of direct sunlight per day, 300-600 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = spinachInfo;
+}
+ else if (plantName === "Basil") {
+    const basilInfo = `
+    <img src="images/basil.jpg" alt="Basil" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Basil (Ocimum basilicum) is a fragrant herb commonly used in cooking, particularly in Italian and Southeast Asian cuisines. It is rich in vitamins A, C, and K, as well as essential oils and antioxidants.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Start seeds indoors 6-8 weeks before the last frost date or sow directly into the garden after the last frost.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors when they have 2-3 true leaves and the risk of frost has passed.<br>
+        <strong>Soil Preparation:</strong> Basil prefers well-drained, fertile soil with a pH between 6.0 and 7.5. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 30-45 cm apart in rows 45-60 cm apart. Basil grows well in containers and garden beds.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a liquid fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like downy mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest basil leaves as needed, starting with the top leaves to encourage bushier growth. Regular harvesting promotes continuous production.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 21-29°C, Nighttime: 16-21°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = basilInfo;
+}
+ else if (plantName === "Parsley") {
+    const parsleyInfo = `
+     <img src="images/parsley.jpg" alt="Parsley" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Parsley (Petroselinum crispum) is a versatile herb used as a garnish and flavoring in a variety of dishes. It is rich in vitamins A, C, and K, as well as folate and iron.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Start seeds indoors 6-8 weeks before the last frost date or sow directly into the garden after the last frost.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors when they have 2-3 true leaves and the risk of frost has passed.<br>
+        <strong>Soil Preparation:</strong> Parsley prefers well-drained, fertile soil with a pH between 6.0 and 7.0. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 15-30 cm apart in rows 30-45 cm apart. Parsley grows well in containers and garden beds.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a liquid fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like downy mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest parsley leaves as needed, starting with the outer leaves. Regular harvesting promotes continuous production.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 16-21°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 4-6 hours of direct sunlight per day, 300-600 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = parsleyInfo;
+} else if (plantName === "Thyme") {
+    const thymeInfo = `
+    <img src="images/thyme.jpg" alt="Thyme" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Thyme (Thymus vulgaris) is a fragrant herb used in cooking and herbal medicine. It is rich in vitamins A and C, as well as essential oils with antiseptic properties.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Start seeds indoors 6-8 weeks before the last frost date or sow directly into the garden after the last frost.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors when they have 2-3 true leaves and the risk of frost has passed.<br>
+        <strong>Soil Preparation:</strong> Thyme prefers well-drained, sandy soil with a pH between 6.0 and 8.0. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 30-45 cm apart in rows 45-60 cm apart. Thyme grows well in containers and garden beds.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a liquid fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like root rot. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest thyme leaves as needed, starting with the top leaves to encourage bushier growth. Regular harvesting promotes continuous production.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-60%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-50%<br>
+        <strong>Air Temperature:</strong> Daytime: 18-24°C, Nighttime: 13-18°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = thymeInfo;
+} else if (plantName === "Dill") {
+    const dillInfo = `
+     <img src="images/dill.jpg" alt="Dill" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Dill (Anethum graveolens) is an aromatic herb used in cooking and herbal medicine. It is rich in vitamins A and C, as well as essential oils with digestive benefits.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Sow seeds directly into the garden 1-2 weeks before the last frost date or in early fall for a fall crop.<br>
+        <strong>Transplanting:</strong> Dill is usually direct-seeded, but seedlings can be transplanted when they have 2-3 true leaves.<br>
+        <strong>Soil Preparation:</strong> Dill prefers well-drained, sandy soil with a pH between 5.5 and 7.5. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space seeds or seedlings 30-45 cm apart in rows 45-60 cm apart. Dill grows well in containers and garden beds.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a liquid fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest dill leaves as needed, starting with the outer leaves. Regular harvesting promotes continuous production.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 16-24°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = dillInfo;
+} else if (plantName === "Cilantro") {
+    const cilantroInfo = `
+    <img src="images/cilantro.jpg" alt="Cilantro" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Cilantro (Coriandrum sativum) is an aromatic herb used in cooking, particularly in Latin American and Asian cuisines. It is rich in vitamins A, C, and K, as well as essential oils and antioxidants.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Sow seeds directly into the garden 1-2 weeks before the last frost date or in early fall for a fall crop.<br>
+        <strong>Transplanting:</strong> Cilantro is usually direct-seeded, but seedlings can be transplanted when they have 2-3 true leaves.<br>
+        <strong>Soil Preparation:</strong> Cilantro prefers well-drained, fertile soil with a pH between 6.2 and 6.8. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space seeds or seedlings 15-30 cm apart in rows 30-45 cm apart. Cilantro grows well in containers and garden beds.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a liquid fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest cilantro leaves as needed, starting with the outer leaves. Regular harvesting promotes continuous production.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 16-24°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 4-6 hours of direct sunlight per day, 300-600 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = cilantroInfo;
+}
+ else if (plantName === "Petunias") {
+    const petuniaInfo = `
+    <img src="images/petunias.png" alt="Petunias" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Petunias (Petunia spp.) are popular flowering plants known for their vibrant colors and trumpet-shaped flowers. They are often used in hanging baskets, borders, and garden beds.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Start seeds indoors 10-12 weeks before the last frost date. Petunia seeds need light to germinate, so do not cover them with soil.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors after the last frost when they have 4-6 true leaves.<br>
+        <strong>Soil Preparation:</strong> Petunias prefer well-drained, fertile soil with a pH between 6.0 and 7.5. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 15-30 cm apart in rows 30-45 cm apart. Petunias can be planted in containers, hanging baskets, or garden beds.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with a liquid fertilizer every 2-3 weeks during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Pruning:</strong> Deadhead spent flowers to encourage continuous blooming and prevent seed formation.<br>
+        <strong>Harvesting:</strong> Harvest petunias for floral arrangements by cutting the stems just above a leaf node.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 18-24°C, Nighttime: 13-18°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = petuniaInfo;
+} else if (plantName === "Gerbera") {
+    const gerberaInfo = `
+     <img src="images/gerbera.jpg" alt="Gerbera" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Gerbera (Gerbera jamesonii) are known for their large, brightly colored daisy-like flowers. They are popular in floral arrangements and as garden plants.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Start seeds indoors 10-12 weeks before the last frost date. Gerbera seeds need light to germinate, so do not cover them with soil.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors after the last frost when they have 4-6 true leaves.<br>
+        <strong>Soil Preparation:</strong> Gerberas prefer well-drained, fertile soil with a pH between 5.5 and 6.5. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 30-45 cm apart in rows 45-60 cm apart. Gerberas can be planted in containers, garden beds, or borders.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with a liquid fertilizer every 2-3 weeks during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Pruning:</strong> Deadhead spent flowers to encourage continuous blooming and prevent seed formation.<br>
+        <strong>Harvesting:</strong> Harvest gerberas for floral arrangements by cutting the stems just above a leaf node.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 18-24°C, Nighttime: 13-18°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = gerberaInfo;
+} else if (plantName === "Tulips") {
+    const tulipInfo = `
+    <img src="images/tulips.jpg" alt="Tulips" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Tulips (Tulipa spp.) are spring-blooming perennials with large, showy flowers. They are popular in gardens and as cut flowers for floral arrangements.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Bulb Selection and Planting:</strong> Choose healthy, disease-free bulbs. Plant bulbs in the fall, 6-8 weeks before the first hard frost.<br>
+        <strong>Soil Preparation:</strong> Tulips prefer well-drained, sandy soil with a pH between 6.0 and 7.0. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Plant bulbs 10-15 cm deep and 10-15 cm apart. Tulips can be planted in garden beds, borders, or containers.<br>
+        <strong>Watering:</strong> Water thoroughly after planting and keep the soil moist during the growing season. Avoid overwatering to prevent bulb rot.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with a bulb fertilizer in early spring.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like tulip fire. Use organic or chemical controls as necessary.<br>
+        <strong>Pruning:</strong> Remove spent flowers to prevent seed formation and direct energy back to the bulb.<br>
+        <strong>Harvesting:</strong> Harvest tulips for floral arrangements by cutting the stems just above the base of the plant.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-60%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-50%<br>
+        <strong>Air Temperature:</strong> Daytime: 13-18°C, Nighttime: 7-13°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = tulipInfo;
+} else if (plantName === "Daisies") {
+    const daisyInfo = `
+    <img src="images/daisies.jpg" alt="Daisies" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Daisies (Bellis perennis) are cheerful perennial flowers known for their white petals and yellow centers. They are popular in gardens and as cut flowers for floral arrangements.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Start seeds indoors 6-8 weeks before the last frost date or sow directly into the garden after the last frost.<br>
+        <strong>Transplanting:</strong> Transplant seedlings outdoors after the last frost when they have 4-6 true leaves.<br>
+        <strong>Soil Preparation:</strong> Daisies prefer well-drained, fertile soil with a pH between 6.0 and 7.0. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space plants 30-45 cm apart in rows 45-60 cm apart. Daisies can be planted in garden beds, borders, or containers.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist but not waterlogged. Water at the base of the plant to avoid wetting the foliage.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with a liquid fertilizer every 4-6 weeks during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Pruning:</strong> Deadhead spent flowers to encourage continuous blooming and prevent seed formation.<br>
+        <strong>Harvesting:</strong> Harvest daisies for floral arrangements by cutting the stems just above a leaf node.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 18-24°C, Nighttime: 13-18°C<br>
+        <strong>Light Intensity:</strong> Full sun to partial shade, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = daisyInfo;
+} else if (plantName === "Sunflowers") {
+    const sunflowerInfo = `
+    <img src="images/sunflowers.jpg" alt="Sunflowers" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Sunflowers (Helianthus annuus) are tall, annual plants known for their large, bright yellow flowers and edible seeds. They are popular in gardens and as cut flowers for floral arrangements.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Germination:</strong> Sow seeds directly into the garden after the last frost date. Sunflower seeds germinate quickly in warm soil.<br>
+        <strong>Transplanting:</strong> Sunflowers are usually direct-seeded, but seedlings can be transplanted when they have 2-3 true leaves.<br>
+        <strong>Soil Preparation:</strong> Sunflowers prefer well-drained, fertile soil with a pH between 6.0 and 7.5. Adding compost improves soil fertility and texture.<br>
+        <strong>Planting:</strong> Space seeds or seedlings 30-45 cm apart in rows 60-90 cm apart. Sunflowers can be planted in garden beds, borders, or containers.<br>
+        <strong>Watering:</strong> Keep the soil consistently moist, providing 1-1.5 inches of water per week. Avoid overhead watering to prevent disease.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer at planting and side-dress with compost or a liquid fertilizer during the growing season.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use organic or chemical controls as necessary.<br>
+        <strong>Harvesting:</strong> Harvest sunflowers for floral arrangements when the petals begin to open. Cut the stems early in the morning for the longest vase life.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 60-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 50-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 21-29°C, Nighttime: 16-21°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial, but excessive UV exposure can cause leaf burn.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = sunflowerInfo;
+}
+ else if (plantName === "Wheat") {
+    const wheatInfo = `
+    <img src="images/wheat.jpg" alt="Wheat" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Wheat (Triticum spp.) is a staple grain crop grown worldwide, used to produce flour for bread, pasta, and other food products. It is rich in carbohydrates, fiber, and protein.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Planting:</strong> Choose high-yield, disease-resistant varieties. Sow seeds directly into the field in the fall for winter wheat or in the spring for spring wheat.<br>
+        <strong>Soil Preparation:</strong> Wheat prefers well-drained, loamy soil with a pH between 6.0 and 7.0. Tillage and incorporation of organic matter improve soil structure and fertility.<br>
+        <strong>Planting:</strong> Plant seeds at a depth of 2-5 cm, with a spacing of 15-25 cm between rows.<br>
+        <strong>Watering:</strong> Wheat requires consistent moisture, especially during germination and early growth stages. Irrigate as needed to maintain soil moisture.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer based on soil test results. Nitrogen is particularly important for wheat growth and yield.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like rust. Use integrated pest management (IPM) practices and apply pesticides as necessary.<br>
+        <strong>Harvesting:</strong> Harvest wheat when the grain is fully mature and dry. Combine harvesters are typically used for large-scale harvesting.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 15-24°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial for growth, but excessive UV exposure can cause damage to the plants.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = wheatInfo;
+} else if (plantName === "Barley") {
+    const barleyInfo = `
+     <img src="images/barley.jpeg" alt="Barley" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Barley (Hordeum vulgare) is a versatile grain crop used for animal feed, brewing, and as a food ingredient. It is rich in fiber, vitamins, and minerals.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Planting:</strong> Choose high-yield, disease-resistant varieties. Sow seeds directly into the field in the fall for winter barley or in the spring for spring barley.<br>
+        <strong>Soil Preparation:</strong> Barley prefers well-drained, loamy soil with a pH between 6.0 and 7.5. Tillage and incorporation of organic matter improve soil structure and fertility.<br>
+        <strong>Planting:</strong> Plant seeds at a depth of 2-5 cm, with a spacing of 15-20 cm between rows.<br>
+        <strong>Watering:</strong> Barley requires consistent moisture, especially during germination and early growth stages. Irrigate as needed to maintain soil moisture.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer based on soil test results. Nitrogen is particularly important for barley growth and yield.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like powdery mildew. Use integrated pest management (IPM) practices and apply pesticides as necessary.<br>
+        <strong>Harvesting:</strong> Harvest barley when the grain is fully mature and dry. Combine harvesters are typically used for large-scale harvesting.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 15-24°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial for growth, but excessive UV exposure can cause damage to the plants.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = barleyInfo;
+} else if (plantName === "Oats") {
+    const oatsInfo = `
+    <img src="images/oats.jpg" alt="Oats" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Oats (Avena sativa) are a cereal grain used for human consumption and livestock feed. They are rich in fiber, vitamins, and minerals, and are commonly used to make oatmeal and other food products.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Planting:</strong> Choose high-yield, disease-resistant varieties. Sow seeds directly into the field in early spring.<br>
+        <strong>Soil Preparation:</strong> Oats prefer well-drained, loamy soil with a pH between 6.0 and 7.0. Tillage and incorporation of organic matter improve soil structure and fertility.<br>
+        <strong>Planting:</strong> Plant seeds at a depth of 2-5 cm, with a spacing of 15-20 cm between rows.<br>
+        <strong>Watering:</strong> Oats require consistent moisture, especially during germination and early growth stages. Irrigate as needed to maintain soil moisture.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer based on soil test results. Nitrogen is particularly important for oats growth and yield.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like crown rust. Use integrated pest management (IPM) practices and apply pesticides as necessary.<br>
+        <strong>Harvesting:</strong> Harvest oats when the grain is fully mature and dry. Combine harvesters are typically used for large-scale harvesting.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 15-24°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial for growth, but excessive UV exposure can cause damage to the plants.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = oatsInfo;
+} else if (plantName === "Rye") {
+    const ryeInfo = `
+    <img src="images/rye.jpg" alt="Rye" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Rye (Secale cereale) is a cereal grain used for animal feed, brewing, and as a food ingredient. It is rich in fiber, vitamins, and minerals.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Planting:</strong> Choose high-yield, disease-resistant varieties. Sow seeds directly into the field in the fall for winter rye or in the spring for spring rye.<br>
+        <strong>Soil Preparation:</strong> Rye prefers well-drained, loamy soil with a pH between 5.5 and 7.0. Tillage and incorporation of organic matter improve soil structure and fertility.<br>
+        <strong>Planting:</strong> Plant seeds at a depth of 2-5 cm, with a spacing of 15-20 cm between rows.<br>
+        <strong>Watering:</strong> Rye requires consistent moisture, especially during germination and early growth stages. Irrigate as needed to maintain soil moisture.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer based on soil test results. Nitrogen is particularly important for rye growth and yield.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like aphids and diseases like ergot. Use integrated pest management (IPM) practices and apply pesticides as necessary.<br>
+        <strong>Harvesting:</strong> Harvest rye when the grain is fully mature and dry. Combine harvesters are typically used for large-scale harvesting.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 15-24°C, Nighttime: 10-16°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial for growth, but excessive UV exposure can cause damage to the plants.<br>
+    </div>
+    
+    `;
+    plantInfoParagraph.innerHTML = ryeInfo;
+} else if (plantName === "Corn") {
+    const cornInfo = `
+     <img src="images/corn.jpg" alt="Corn" class="plant-image">
+    <div class="plant-description">
+        <strong>Description:</strong>
+        <p>Corn (Zea mays) is a widely grown grain crop used for food, animal feed, and industrial products. It is rich in carbohydrates, fiber, vitamins, and minerals.</p>
+        <strong>Cultivation Process:</strong><br>
+        <strong>Seed Selection and Planting:</strong> Choose high-yield, disease-resistant varieties. Sow seeds directly into the field in the spring after the last frost.<br>
+        <strong>Soil Preparation:</strong> Corn prefers well-drained, fertile soil with a pH between 6.0 and 6.8. Tillage and incorporation of organic matter improve soil structure and fertility.<br>
+        <strong>Planting:</strong> Plant seeds at a depth of 2-5 cm, with a spacing of 20-30 cm between rows.<br>
+        <strong>Watering:</strong> Corn requires consistent moisture, especially during germination and early growth stages. Irrigate as needed to maintain soil moisture.<br>
+        <strong>Fertilizing:</strong> Apply a balanced fertilizer based on soil test results. Nitrogen is particularly important for corn growth and yield.<br>
+        <strong>Pest and Disease Management:</strong> Monitor for pests like corn borers and diseases like blight. Use integrated pest management (IPM) practices and apply pesticides as necessary.<br>
+        <strong>Harvesting:</strong> Harvest corn when the ears are fully mature and dry. Combine harvesters are typically used for large-scale harvesting.<br>
+        <strong>Environmental Parameters:</strong><br>
+        <strong>Soil Humidity:</strong> 50-70%<br>
+        <strong>Air Quality:</strong> Ensure good air circulation to reduce the risk of fungal diseases. Avoid high pollution levels.<br>
+        <strong>Air Humidity:</strong> 40-60%<br>
+        <strong>Air Temperature:</strong> Daytime: 24-29°C, Nighttime: 16-21°C<br>
+        <strong>Light Intensity:</strong> Full sun, 6-8 hours of direct sunlight per day, 400-700 µmol/m²/s (PAR)<br>
+        <strong>UV Intensity:</strong> Moderate UV-B levels can be beneficial for growth, but excessive UV exposure can cause damage to the plants.<br>
+    </div>
+   
+    `;
+    plantInfoParagraph.innerHTML = cornInfo;
+}
+ else {
+                    
+                    plantInfoParagraph.innerHTML = `<p>Information about ${plantName} will be available soon.</p>`;
+                }
+            }
+            
+            
+            document.getElementById('vegetables-button').addEventListener('click', () => showCategoryOptions('vegetables'));
+            document.getElementById('herbs-button').addEventListener('click', () => showCategoryOptions('herbs'));
+            document.getElementById('flowers-button').addEventListener('click', () => showCategoryOptions('flowers'));
+            document.getElementById('grains-button').addEventListener('click', () => showCategoryOptions('grains'));
+        </script>
+    </main>
+</body>
+</html>
