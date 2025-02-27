@@ -1,0 +1,3 @@
+A system that integrates a web application, an Arduino Uno R4 board and various sensors for real-time monitoring of greenhouse parameters.  
+The sensors, which measure soil moisture (Soil Moisture Sensor), air quality (MQ135), temperature and humidity (DHT11), light intensity and UV level (GUVA-S12D), are connected to an Arduino Uno R4 WiFi Arduino Uno R4, sending the data to the Firebase real-time database for live access, the data is displayed in the web application (HTML, CSS and JavaScript). 
+The web application has four main pages; Home (overview of the system and its purpose), Real-Time Data (displays real-time sensor data), Past Data (displays past data), Plant Information (provides information on optimal conditions for different plants).
